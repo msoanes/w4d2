@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NinetyNineCats</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <!-- <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %> -->
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<% unless flash.empty? %>
+  <ul>
+    <% flash.each do |message| %>
+      <li class="<%= message[0] %>"><%= message[1] %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= yield %>
+
+</body>
+</html>

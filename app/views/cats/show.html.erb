@@ -1,0 +1,38 @@
+<h1><%= @cat.name %> </h1>
+
+<table border="1px">
+  <th colspan=2>Cat Profile</th>
+  <% @cat.rendered_attrs.each do |attr_name, attr_val| %>
+    <tr>
+      <td><%= "#{attr_name}".capitalize %></td>
+      <td><%= attr_val.capitalize %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to "Request This Cat", new_cat_rental_request_url(catid: @cat.id) %>
+<br>
+<%= link_to "Browse All Cats", cats_url %>
+<br>
+<%= link_to "Question Your Life Choices", "http://lmgtfy.com/?q=too+many+cats" %>
+<h2>Rental Requests</h2>
+<% if @cat.rental_requests.any? %>
+  <% @cat.rental_requests.order(:start_date).each do |request| %>
+    <p>
+      <%= "#{request.render_dates} #{request.symbol}" %>
+      <% if request.pending? %>
+        <%= button_to(
+              'Approve',
+              approve_cat_rental_request_path(request),
+              method: :patch
+            ) %>
+
+        <%= button_to(
+              'Deny',
+              deny_cat_rental_request_path(request),
+              method: :patch
+            ) %>
+      <% end %>
+    </p>
+  <% end %>
+<% end %>
